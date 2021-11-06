@@ -1,0 +1,23 @@
+sudo: required
+language: node_js
+node_js:
+    - "stable"
+
+services:
+    - docker
+before_install:
+    - docker build -t travisccc/travis-ci-react-app-1.0 -f Dockerfile.dev .
+script:
+    - docker run -e CI=true travisccc/travis-ci-react-app-1.0 npm run test -- --coverage --watchAll=false
+
+deploy: ### Tells Travis-ci how to deploy your app
+    provider: elasticbeanstalk
+    region: "us-east-1" ### AWS region of your choice
+    app: "travis-ci-react-app-1.0" ### Your EB App name
+    env: "Traviscireactapp10-env" ### Your EB App environment name
+    bucket_name: "elasticbeanstalk-us-east-1-615572604844" ### The s3 bucket generated for the server location used for your environment
+    bucket_path: "EBApptest" ### The folder we created on aws to receive the app sent from travis-ci, S3 folder name under S3 bucket above
+    on:
+       branch: main ### Tells travis-ci which github branch update should trigger a build
+    access_key_id: "$AWS_ACCESS_KEY" ### IAM access key generated in AWS but stored in travis ci
+    secret_access_key: "$AWS_SECRET_KEY" ### IAM secret key generated in IAM of AWS but stored in travis ci
