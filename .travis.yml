@@ -13,8 +13,8 @@ script:
 deploy: ### Tells Travis-ci how to deploy your app
     provider: elasticbeanstalk
     region: "us-east-1" ### AWS region of your choice
-    app: "travis-ci-react-app-1.0" ### Your EB App name
-    env: "Traviscireactapp10-env" ### Your EB App environment name
+    app: "travis-ci-react-app-2.0" ### Your EB App name
+    env: "Traviscireactapp20-env" ### Your EB App environment name
     bucket_name: "elasticbeanstalk-us-east-1-615572604844" ### The s3 bucket generated for the server location used for your environment
     bucket_path: "EBApptest" ### The folder we created on aws to receive the app sent from travis-ci, S3 folder name under S3 bucket above
     on:
